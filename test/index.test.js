@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const fetchClientGenerator = require('../index');
+import { expect } from 'chai';
+import fetchClientGenerator from '../index.js';
 
 describe('fetch-client-generator', () => {
   it('should export an object', () => {

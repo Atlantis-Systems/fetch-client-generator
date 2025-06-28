@@ -1,4 +1,4 @@
 // fetch-client-generator main entry point
-module.exports = {
+export default {
   // Main functionality will be implemented here
 };
