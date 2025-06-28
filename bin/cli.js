@@ -4,6 +4,7 @@ import { program } from 'commander';
 import { readFileSync, writeFileSync } from 'fs';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import chokidar from 'chokidar';
 import { generate } from '../index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,6 +21,7 @@ program
   .description('Generate fetch client code')
   .option('-i, --input <file>', 'input specification file')
   .option('-o, --output <file>', 'output file path')
+  .option('-w, --watch', 'watch input file for changes and regenerate automatically')
   .action((options) => {
     if (!options.input) {
       console.error('Error: Input file is required');
@@ -31,18 +33,51 @@ program
       process.exit(1);
     }
 
-    try {
-      console.log('Generating fetch client...');
-      console.log('Input:', options.input);
-      console.log('Output:', options.output);
+    const generateClient = () => {
+      try {
+        console.log('Generating fetch client...');
+        console.log('Input:', options.input);
+        console.log('Output:', options.output);
 
-      const clientCode = generate(options.input);
-      writeFileSync(options.output, clientCode, 'utf8');
+        const clientCode = generate(options.input);
+        writeFileSync(options.output, clientCode, 'utf8');
+        
+        console.log('✓ Fetch client generated successfully!');
+      } catch (error) {
+        console.error('Error generating client:', error.message);
+        if (!options.watch) {
+          process.exit(1);
+        }
+      }
+    };
+
+    // Generate initially
+    generateClient();
+
+    // If watch flag is set, watch for changes
+    if (options.watch) {
+      console.log(`Watching ${options.input} for changes...`);
       
-      console.log('✓ Fetch client generated successfully!');
-    } catch (error) {
-      console.error('Error generating client:', error.message);
-      process.exit(1);
+      const watcher = chokidar.watch(options.input, {
+        persistent: true,
+        ignoreInitial: true
+      });
+
+      watcher.on('change', () => {
+        console.log('\nFile changed, regenerating...');
+        generateClient();
+      });
+
+      watcher.on('error', (error) => {
+        console.error('Watcher error:', error);
+      });
+
+      // Keep the process alive
+      process.on('SIGINT', () => {
+        console.log('\nStopping file watcher...');
+        watcher.close();
+        process.exit(0);
+      });
     }
   });
 
