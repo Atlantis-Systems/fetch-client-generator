@@ -1,0 +1,28 @@
+{
+  "name": "fetch-client-generator",
+  "version": "1.0.0",
+  "description": "A tool for generating fetch-based HTTP client code",
+  "main": "index.js",
+  "bin": {
+    "fetch-client-generator": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "fetch",
+    "client",
+    "generator",
+    "http",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "chai": "^5.2.0",
+    "mocha": "^11.7.1"
+  }
+}
