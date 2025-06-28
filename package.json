@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A tool for generating fetch-based HTTP client code",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "fetch-client-generator": "./bin/cli.js"
   },

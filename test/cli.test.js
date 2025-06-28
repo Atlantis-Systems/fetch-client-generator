@@ -1,6 +1,10 @@
-const { expect } = require('chai');
-const { exec } = require('child_process');
-const path = require('path');
+import { expect } from 'chai';
+import { exec } from 'child_process';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 describe('CLI', () => {
   it('should show help when no arguments provided', (done) => {
