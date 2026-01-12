@@ -1,6 +1,6 @@
 {
   "name": "fetch-client-generator",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A tool for generating fetch-based HTTP client code",
   "main": "index.js",
   "type": "module",
