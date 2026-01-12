@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "fetch-client-generator": "./bin/cli.js"
+    "fetch-client-generator": "bin/cli.js"
   },
   "scripts": {
     "test": "mocha"
